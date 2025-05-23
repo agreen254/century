@@ -11,13 +11,13 @@ const UsersPage = () => {
 
   return (
     <div>
-      <p className="text-gray-500 text-center">Climbing as {slug}</p>
+      <p className="text-gray-500 text-center mt-4">Climbing as {slug}</p>
       <div className="flex justify-center mb-12">
         <AddClimb username={slug} />
       </div>
       <div className="flex w-full justify-center">
         {climbs.isLoading && <ClimbsLoader />}
-        {climbs.data && <Climbs climbs={climbs.data} />}
+        {climbs.data && <Climbs climbs={climbs.data} username={slug} />}
       </div>
     </div>
   );

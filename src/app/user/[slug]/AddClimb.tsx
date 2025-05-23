@@ -24,6 +24,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   zone: z.string(),
@@ -33,6 +34,7 @@ const formSchema = z.object({
 });
 
 const AddClimb = ({ username }: { username: string }) => {
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,10 +53,14 @@ const AddClimb = ({ username }: { username: string }) => {
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/climbs/${props.user_id}`,
         { method: "POST", body: JSON.stringify(props) }
       ).then((res) => res.json()),
-    onSuccess: () =>
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [username, "climbs"],
-      }),
+      });
+      toast({
+        description: "Climb added.",
+      });
+    },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -71,7 +77,7 @@ const AddClimb = ({ username }: { username: string }) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-[90%] max-w-[500px] space-y-6"
+        className="w-[90%] max-w-[320px] space-y-2"
       >
         <FormField
           control={form.control}

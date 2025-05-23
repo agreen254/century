@@ -30,3 +30,18 @@ export async function POST(req: NextRequest) {
   client.release();
   return NextResponse.json(res);
 }
+
+export async function DELETE(req: NextRequest) {
+  const body = await req.json();
+  const client = await pool.connect();
+  const path = req.nextUrl.pathname.split("/");
+  const username = path[path.length - 1];
+
+  const res = await client.query(
+    `DELETE FROM climbs WHERE user_id = $1::text AND id = $2::int8 RETURNING *`,
+    [username, body?.id]
+  );
+
+  client.release();
+  return NextResponse.json(res);
+}

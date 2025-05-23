@@ -25,3 +25,7 @@ export type PostClimbProps = {
   user_id: string;
   notes: string;
 }
+
+export type DeleteClimbProps = {
+  id: number;
+}
