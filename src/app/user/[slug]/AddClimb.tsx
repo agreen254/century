@@ -151,9 +151,10 @@ const AddClimb = ({ username }: { username: string }) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
+                  <SelectItem value="arch">Arch</SelectItem>
                   <SelectItem value="geo">Geo</SelectItem>
                   <SelectItem value="hummingbird">Hummingbird</SelectItem>
-                  <SelectItem value="arch">Arch</SelectItem>
+                  <SelectItem value="pearl">Pearl</SelectItem>
                   <SelectItem value="comp-wall">Comp Wall</SelectItem>
                   <SelectItem value="wave-wall">Wave Wall</SelectItem>
                 </SelectContent>
