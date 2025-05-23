@@ -17,7 +17,18 @@ import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 
 const formSchema = z.object({
-  username: z.string().min(1, { message: "Select a valid username." }),
+  // username: z.string().min(1, { message: "Select a valid username." }),
+  username: z.custom<string>(
+    (val) => {
+      return typeof val === "string"
+        ? /^[a-zA-Z0-9]+$/i.test(val) && val.length >= 3
+        : false;
+    },
+    {
+      message:
+        "Username must only contain alphanumeric characters. Min three characters.",
+    }
+  ),
 });
 
 export default function Home() {
@@ -29,8 +40,12 @@ export default function Home() {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    addMutation.mutate(values.username);
-    redirect(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/${values.username}`);
+    addMutation.mutate(values.username.toLowerCase());
+    redirect(
+      `${
+        process.env.NEXT_PUBLIC_SERVER_URL
+      }/user/${values.username.toLowerCase()}`
+    );
   };
 
   const addMutation = useMutation({

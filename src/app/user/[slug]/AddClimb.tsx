@@ -29,7 +29,7 @@ import { useToast } from "@/hooks/use-toast";
 const formSchema = z.object({
   zone: z.string(),
   color: z.string(),
-  grade: z.string().length(1, { message: "Please select a V-Grade." }),
+  grade: z.string().min(1, { message: "Please select a V-Grade." }),
   notes: z.string(),
 });
 
