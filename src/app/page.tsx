@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useMutation } from "@tanstack/react-query";
 
 const formSchema = z.object({
   username: z.string().min(1, { message: "Select a valid username." }),
@@ -28,8 +29,18 @@ export default function Home() {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    addMutation.mutate(values.username);
     redirect(`${process.env.NEXT_PUBLIC_SERVER_URL}/user/${values.username}`);
   };
+
+  const addMutation = useMutation({
+    mutationFn: async (username: string) => {
+      await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user`, {
+        method: "POST",
+        body: JSON.stringify({ username }),
+      }).then((res) => res.json());
+    },
+  });
 
   return (
     <div className="p-10">
@@ -55,7 +66,9 @@ export default function Home() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="mt-2">Go</Button>
+            <Button type="submit" className="mt-2">
+              Go
+            </Button>
           </form>
         </Form>
       </div>
