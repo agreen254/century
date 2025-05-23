@@ -176,8 +176,12 @@ const AddClimb = ({ username }: { username: string }) => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Add Climb
+        <Button
+          type="submit"
+          disabled={addMutation.isPending}
+          className="w-full"
+        >
+          {addMutation.isPending ? "Loading..." : "Add Climb"}
         </Button>
       </form>
     </Form>
