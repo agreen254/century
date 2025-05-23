@@ -1,6 +1,6 @@
 "use client";
 
-import useGetAllClimbs from "@/lib/hooks/useGetAllClimbs";
+import useGetAllClimbs from "@/hooks/useGetAllClimbs";
 import { useParams } from "next/navigation";
 import { Climbs, ClimbsLoader } from "./Climbs";
 import AddClimb from "./AddClimb";

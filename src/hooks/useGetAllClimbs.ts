@@ -1,4 +1,4 @@
-import type { Climb, RawClimb } from "../types";
+import type { Climb, RawClimb } from "../lib/types";
 import { useQuery } from "@tanstack/react-query";
 
 const useGetAllClimbs = (username: string) =>
